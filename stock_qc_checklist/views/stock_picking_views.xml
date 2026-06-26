@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_view_qc_checklist" model="ir.actions.act_window">
+        <field name="name">QC Checklists</field>
+        <field name="res_model">qc.checklist</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('picking_id', '=', active_id)]</field>
+        <field name="context">{'default_picking_id': active_id}</field>
+    </record>
+
+    <record id="view_picking_form_inherit_qc" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.qc</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="%(action_view_qc_checklist)d" 
+                        type="action" 
+                        class="oe_stat_button" 
+                        icon="fa-check-square-o"
+                        invisible="picking_type_code != 'incoming'">
+                    <field name="qc_checklist_count" widget="statinfo" string="QC Checklists"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

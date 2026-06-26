@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="custom_stock_dashboard.StockDashboardTemplate">
+        <div class="o_action_manager bg-view">
+            <div class="container-fluid py-4">
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm" style="cursor: pointer;" t-on-click="openCriticalProducts">
+                            <div class="card-body bg-danger text-white rounded">
+                                <h5 class="card-title fw-bold">Critical Stock Items</h5>
+                                <h2 class="display-4 fw-bold"><t t-esc="state.totalCritical"/></h2>
+                                <p class="card-text mb-0"><i class="fa fa-arrow-right me-2"/>Click to filter List View</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-8 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+                                <h5 class="mb-0 fw-bold">Stock Replenishment Progress</h5>
+                            </div>
+                            <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                                <t t-if="state.criticalProducts.length > 0">
+                                    <t t-foreach="state.criticalProducts" t-as="product" t-key="product.id">
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <span class="fw-bold text-dark"><t t-esc="product.name"/></span>
+                                                <span class="text-muted fw-bold">
+                                                    <t t-esc="product.qty_available"/> / <t t-esc="product.min_qty"/>
+                                                </span>
+                                            </div>
+                                            <div class="progress" style="height: 12px;">
+                                                <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" 
+                                                     role="progressbar" 
+                                                     t-att-style="'width: ' + product.progress + '%'" 
+                                                     t-att-aria-valuenow="product.progress" 
+                                                     aria-valuemin="0" 
+                                                     aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <div class="text-center text-muted py-5">
+                                        <i class="fa fa-check-circle fa-3x mb-3 text-success"/>
+                                        <h5>All stock levels are optimal.</h5>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
