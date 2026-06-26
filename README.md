@@ -1,4 +1,4 @@
-Odoo 19 Custom Modules Portfolio  
+Odoo 19 Custom Modules   
 This repository contains a collection of advanced, production-ready custom modules developed for Odoo 19.0 using Python 3.10. These modules are designed to solve 
 critical business gaps in Inventory Management, Quality Control, and Human Resources by leveraging Odoo's modern framework components like OWL (Odoo Web Library), 
 Scheduled Actions (ir.cron), and the automated Activity Mixin.
