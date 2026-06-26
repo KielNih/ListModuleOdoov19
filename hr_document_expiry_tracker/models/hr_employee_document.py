@@ -11,23 +11,17 @@ class HrEmployeeDocument(models.Model):
     expiry_date = fields.Date(string='Expiry Date', required=True, tracking=True)
     is_expiry_notified = fields.Boolean(string='Is Expiry Notified', default=False, copy=False)
 
-    # Tambahkan 2 Computed Field ini
     is_expired = fields.Boolean(string='Is Expired', compute='_compute_document_status')
     is_expiring_soon = fields.Boolean(string='Is Expiring Soon', compute='_compute_document_status')
 
     @api.depends('expiry_date')
     def _compute_document_status(self):
-        """
-        Kalkulasi status dokumen secara real-time di backend.
-        Tidak disimpan di database (tanpa store=True) agar selalu akurat setiap hari.
-        """
         today = fields.Date.today()
         limit_date = today + relativedelta(days=30)
         
         for doc in self:
             if doc.expiry_date:
                 doc.is_expired = doc.expiry_date < today
-                # True jika tanggal hari ini berada dalam rentang 30 hari sebelum expired
                 doc.is_expiring_soon = today <= doc.expiry_date <= limit_date
             else:
                 doc.is_expired = False
